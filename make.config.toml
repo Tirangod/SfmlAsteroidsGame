@@ -1,0 +1,7 @@
+[Build]
+src = "src"
+cc = "g++"
+mainfile = "main.cpp"
+outfile = "asteroids.exe"
+flags = ["-Iinclude", "-L/lib"]
+modules = ["-lsfml-graphics", "-lsfml-window", "-lsfml-system", "-lsfml-audio"]
