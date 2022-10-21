@@ -9,7 +9,7 @@
 
 #include <game/PlayerSpaceship.hpp>
 #include <game/GameEventSystem.hpp>
-#include <game/GameObjectsList.hpp>
+#include <game/GameObjectsPool.hpp>
 #include <game/LevelManager.hpp>
 #include <game/IGameObject.hpp>
 #include <game/GameEvent.hpp>
@@ -26,7 +26,7 @@ class GameRunner {
 private:
     static GameRunner *instance;
 
-    GameObjectsList objects;
+    GameObjectsPool objects;
 
     RenderWindow *window; // TODO: Probably should be not a pointer
     ViewUtil *viewUtil;

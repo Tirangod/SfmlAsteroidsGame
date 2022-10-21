@@ -1,23 +1,23 @@
-#include <game/GameObjectsList.hpp>
+#include <game/GameObjectsPool.hpp>
 
-GameObjectsList::GameObjectsList() {
+GameObjectsPool::GameObjectsPool() {
     needToOptimize = false;
     needToFlush = false;
     canPushDirect = true;
 }
 
-void GameObjectsList::block() { 
+void GameObjectsPool::block() { 
     canPushDirect = false; 
 
     /*
-    std::string str = "(GameObjectsList::block) Pushing is blocked:";
+    std::string str = "(GameObjectsPool::block) Pushing is blocked:";
     str.append("\n\tIs need to flush: ").
         append(needToFlush ? "true" : "false");
     Logger::log(str);
     */
 }
 
-void GameObjectsList::checkOptimization() {
+void GameObjectsPool::checkOptimization() {
     for (auto obj : actualVector) {
         if (!obj->isActive()) {
             needToOptimize = true;
@@ -27,7 +27,7 @@ void GameObjectsList::checkOptimization() {
     needToOptimize = false;
 }
 
-void GameObjectsList::optimize() {
+void GameObjectsPool::optimize() {
 
     if (!needToOptimize)
         return;
@@ -74,29 +74,29 @@ void GameObjectsList::optimize() {
     }
 
     */
-    Logger::log("(GameObjectsList::optimize) List optimized: " + std::to_string(num));
+    Logger::log("(GameObjectsPool::optimize) List optimized: " + std::to_string(num));
 }
 
-void GameObjectsList::set(IGameObject *obj, int index) {
+void GameObjectsPool::set(IGameObject *obj, int index) {
     actualVector[index] = obj;
 }
 
-void GameObjectsList::push(IGameObject* object) {
+void GameObjectsPool::push(IGameObject* object) {
     if (canPushDirect) {
-        Logger::log("(GameObjectsList::push) Push object DIRECTLY");
+        Logger::log("(GameObjectsPool::push) Push object DIRECTLY");
         actualVector.push_back(object);
     } else {
-        Logger::log("(GameObjectsList::push) Push object to BUFFER");
+        Logger::log("(GameObjectsPool::push) Push object to BUFFER");
         bufferedVector.push_back(object);
         needToFlush = true;
     }
 }
 
-void GameObjectsList::directPush(IGameObject* object) { 
+void GameObjectsPool::directPush(IGameObject* object) { 
     actualVector.push_back(object);
 }
 
-int GameObjectsList::flush() {
+int GameObjectsPool::flush() {
     canPushDirect = true;
     
     if (!needToFlush)
@@ -112,7 +112,7 @@ int GameObjectsList::flush() {
     needToFlush = false;
 
     //============ LOGGING ============
-    std::string str = "(GameObjectsList::flush) Flushed from buffer:";
+    std::string str = "(GameObjectsPool::flush) Flushed from buffer:";
     str.append("\n\tFlush buffer was: " + std::to_string(bv_size)).
         append("\n\tActual vector size: " + std::to_string(actualVector.size())).
         append("\n\tBuffered vector size: " + std::to_string(bufferedVector.size()));
@@ -122,25 +122,25 @@ int GameObjectsList::flush() {
     return bv_size;
 }
 
-IGameObject* GameObjectsList::at(int index) {
+IGameObject* GameObjectsPool::at(int index) {
     return getActualVector().at(index);    
 }
 
-IGameObject* GameObjectsList::operator[](int index) {
+IGameObject* GameObjectsPool::operator[](int index) {
     return getActualVector().at(index);
 }
 
-void GameObjectsList::operator+=(IGameObject* object) {
+void GameObjectsPool::operator+=(IGameObject* object) {
     push(object);
 }
 
-bool GameObjectsList::isCanPushDirect() { return canPushDirect; }
-bool GameObjectsList::isNeedToFlush() { return needToFlush; }
-bool GameObjectsList::isNeedToOptimize() { return needToOptimize; }
+bool GameObjectsPool::isCanPushDirect() { return canPushDirect; }
+bool GameObjectsPool::isNeedToFlush() { return needToFlush; }
+bool GameObjectsPool::isNeedToOptimize() { return needToOptimize; }
 
-std::vector<IGameObject*>& GameObjectsList::getActualVector() { return actualVector; }
-std::vector<IGameObject*>& GameObjectsList::getBufferedVector() { return bufferedVector; }
+std::vector<IGameObject*>& GameObjectsPool::getActualVector() { return actualVector; }
+std::vector<IGameObject*>& GameObjectsPool::getBufferedVector() { return bufferedVector; }
 
-int GameObjectsList::getSize() { return actualVector.size(); }
-int GameObjectsList::getBufferSize() { return bufferedVector.size(); }
-int GameObjectsList::getTotalSize() { return getSize() + getBufferSize(); }
+int GameObjectsPool::getSize() { return actualVector.size(); }
+int GameObjectsPool::getBufferSize() { return bufferedVector.size(); }
+int GameObjectsPool::getTotalSize() { return getSize() + getBufferSize(); }

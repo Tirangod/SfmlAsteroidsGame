@@ -7,7 +7,7 @@
 #include <game/IGameObject.hpp>
 #include <game/Logger.hpp>
 
-class GameObjectsList {
+class GameObjectsPool {
 private:
     bool needToOptimize;
     bool needToFlush;
@@ -16,7 +16,7 @@ private:
     std::vector<IGameObject*> bufferedVector;
 
 public:
-    GameObjectsList();
+    GameObjectsPool();
 
     void block();
     void optimize();
