@@ -22,8 +22,6 @@ Asteroid::Asteroid(Vector2f pos, Vector2f dir) : moveDir(Utils::normalize(dir)) 
     sprite.setTexture(texture);
     sprite.setOrigin(hw, hh);
     
-    moveDir.x = 0;
-    moveDir.y = 0;
     speed = 50.f;
 
     rect.setSize({hw*2, hh*2});

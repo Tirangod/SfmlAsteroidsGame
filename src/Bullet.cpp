@@ -12,8 +12,6 @@ Bullet::Bullet(Vector2f pos, Vector2f v) : moveDir(v) {
     sprite.setPosition(pos);
     sprite.setOrigin(sprite.getLocalBounds().width/2, sprite.getLocalBounds().height/2);
 
-    moveDir.x = 0;
-    moveDir.y = 0;
     speed = 350.0;
     
     float angle = Utils::radToDeg(atan2f(v.x, v.y));

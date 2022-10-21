@@ -6,14 +6,14 @@ std::string Logger::ansiColor = Logger::color(46, 1);
 std::vector<std::string> Logger::buffer;
 
 void Logger::log(LogLevel level, std::string message) {
-    #ifdef LOGGING
+    //#ifdef LOGGING
         int levelColor = 32 + level * 2;
         std::string t = time();
         auto time = t.substr(0, t.size() - 1);
         auto str = color(levelColor) + "[" + time + "] " + message + reset() + "\n";
         std::cout << str;
         Logger::buffer.push_back("[" + time + "] " + message + "\n");
-    #endif
+    //#endif
 }
 
 void Logger::save(std::string path) {
