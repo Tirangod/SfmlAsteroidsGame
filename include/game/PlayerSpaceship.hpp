@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <cmath>
+#include <memory>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -33,12 +34,12 @@ private:
     bool _isVisible;
 
     bool isShooting;
-    int shootingTimes;
-    int shootingDelay;
+    float shootingCooldown;
+    float shootingDelay;
     
     void moving(float dt);
     void rotation();
-    void shooting();
+    void shooting(float dt);
     void onShot();
 
 public:

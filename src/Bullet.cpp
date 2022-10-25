@@ -19,6 +19,10 @@ Bullet::Bullet(Vector2f pos, Vector2f v) : moveDir(v) {
     sprite.setRotation(-angle);
 }
 
+Bullet::~Bullet() {
+    Logger::log("(Bullet::~Bullet)Bullet destroyed: " + std::to_string(sprite.getPosition().x) + " " + std::to_string(sprite.getPosition().y));
+}
+
 void Bullet::init() { }
 
 void Bullet::update(float dt) {

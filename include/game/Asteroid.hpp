@@ -32,7 +32,7 @@ private:
     RectangleShape rect;
 public:
     ~Asteroid();
-    Asteroid(Vector2f pos, Vector2f dir);
+    Asteroid(Vector2f pos, Vector2f dir, float speed);
 
     void onCollision(IGameObject *other);
     void init();

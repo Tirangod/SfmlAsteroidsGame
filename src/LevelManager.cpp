@@ -25,16 +25,18 @@ void LevelManager::genWave() {
     int total = baseEnemyNumber * difficulty;
     float rad = (2 * Utils::PI) / total;
     float dist = 600.f;
+    float speed =  50.f * sqrtf(difficulty);
 
     for (int i = 0; i < total; i++) {
         auto pos = Vector2f(sin(rad * i), cos(rad * i)) * dist + center;
         auto dir = center - pos;
+        dist += 200.f * Utils::rand() * Utils::randSign();
         Utils::normalize(dir);
 
-        auto asteroid = new Asteroid(pos, dir);
-        
+        auto asteroid = new Asteroid(pos, dir, speed);
         GameEventSystem::emit(new ObjectEvent("ObjectSpawn", asteroid));
     }
 
     difficulty++;
+    wavesDelay *= 1.5f;
 }

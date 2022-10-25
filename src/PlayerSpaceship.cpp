@@ -17,11 +17,11 @@ PlayerSpaceship::PlayerSpaceship() {
 
     moveDir.x = 0;
     moveDir.y = 0;
-    speed = 400.0;
+    speed = 400.f;
 
     isShooting = false;
-    shootingTimes = 0;
-    shootingDelay = 20;
+    shootingCooldown = 0.f;
+    shootingDelay = 20.f;
 }
 
 void PlayerSpaceship::init() {}
@@ -48,7 +48,7 @@ void PlayerSpaceship::moving(float dt) {
 
     Utils::normalize(moveDir);
 
-    sprite.move(moveDir * (speed * dt));
+    sprite.move(moveDir * speed * dt);
 }
 
 void PlayerSpaceship::onShot() {
@@ -66,17 +66,17 @@ void PlayerSpaceship::onShot() {
     Logger::log(LogLevel::INFO, "(Player::onShot) Player shot");
 }
 
-void PlayerSpaceship::shooting() {
+void PlayerSpaceship::shooting(float dt) {
     isShooting = Mouse::isButtonPressed(Mouse::Left);
 
     if (isShooting) {
-        if (shootingTimes >= shootingDelay) {
-            shootingTimes = 0;
+        if (shootingCooldown >= shootingDelay) {
+            shootingCooldown = 0;
             onShot();
         }
-        shootingTimes++;
+        shootingCooldown += 250.f * dt; // Remove magic constant
     } else {
-        shootingTimes = 0;
+        shootingCooldown = 0;
     }
 }
 
@@ -100,7 +100,7 @@ void PlayerSpaceship::rotation() {
 void PlayerSpaceship::update(float dt) {
     moving(dt);
     rotation();
-    shooting();
+    shooting(dt);
 }
 
 void PlayerSpaceship::draw(RenderTarget &target, RenderStates states) const {

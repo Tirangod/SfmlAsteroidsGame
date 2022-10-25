@@ -5,7 +5,7 @@ Asteroid::~Asteroid() {
     Logger::log("(Asteroid::~) Asteroid destroyed"); 
 }
 
-Asteroid::Asteroid(Vector2f pos, Vector2f dir) : moveDir(Utils::normalize(dir)) {
+Asteroid::Asteroid(Vector2f pos, Vector2f dir, float speed) : moveDir(Utils::normalize(dir)), speed(speed) {
     hash = Utils::hashOf("Asteroid");
     _isActive = true;
     _isVisible = true;
@@ -21,8 +21,6 @@ Asteroid::Asteroid(Vector2f pos, Vector2f dir) : moveDir(Utils::normalize(dir)) 
     sprite.setScale(1.5f, 1.5f);
     sprite.setTexture(texture);
     sprite.setOrigin(hw, hh);
-    
-    speed = 50.f;
 
     rect.setSize({hw*2, hh*2});
     rect.setOrigin(hw, hh);

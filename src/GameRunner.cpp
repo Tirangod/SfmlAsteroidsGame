@@ -1,6 +1,5 @@
 #include <game/GameRunner.hpp>
 
-
 GameRunner* GameRunner::instance = nullptr;
 
 GameRunner::GameRunner() {
@@ -41,8 +40,16 @@ Window* GameRunner::getWindow() {
     return Game()->window;
 }
 
+bool isObjectFaraway(IGameObject *object) {
+    auto pos = object->getTransformable().getPosition();
+    return (pos.x >= 3000 || pos.x < -1000) && (pos.y >= 2000 || pos.y < -1000);
+}
+
 void GameRunner::updateObjects(float dt) {
     for (auto obj : objects.getActualVector()) {
+        if (isObjectFaraway(obj))
+            obj->setActive(false);
+
         if (obj->isActive())
             obj->update(dt);
     }
@@ -56,7 +63,6 @@ void GameRunner::drawObjects() {
     window->draw(*ui);
 }
 
-#define OPTIMIZE
 void GameRunner::checkCollisions() {
     IGameObject *obj1, *obj2;
     float dist = 0, size = 0;
@@ -73,11 +79,9 @@ void GameRunner::checkCollisions() {
             // Distance optimization
             // If distance between objects higher than size of obj
             // that skip iteration and go to next obj
-            #ifdef OPTIMIZE
-                dist = Utils::magnitudeOf(obj1->getTransformable().getPosition() - obj2->getTransformable().getPosition());
-                size = fmaxf(obj1->getMaxSize(), obj2->getMaxSize());
-            #endif
-
+            dist = Utils::magnitudeOf(obj1->getTransformable().getPosition() - obj2->getTransformable().getPosition());
+            size = fmaxf(obj1->getMaxSize(), obj2->getMaxSize());
+            
             if (!obj2->isActive() || dist > size)
                 continue;
 
@@ -90,6 +94,8 @@ void GameRunner::checkCollisions() {
         }
     }
 }
+
+#include <memory>
 
 void GameRunner::addObject(IGameObject *obj) {
     Logger::log(LogLevel::ERROR, "(GameRunner::addObject) Game add object");

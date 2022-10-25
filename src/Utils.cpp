@@ -38,6 +38,14 @@ Vector2f& Utils::normalize(Vector2f &vec)
     return vec;
 }
 
+float Utils::rand() {
+    return (std::rand() % 100 + 1) / 100.f;
+}
+
+int Utils::randSign() {
+    return ((int)(rand() * 10.f)) < 5 ? -1 : 1;
+}
+
 /*
 template <typename T1, typename T2>
 float Utils::detOf(Vector2<T1> vec1, Vector2<T2> vec2)

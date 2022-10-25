@@ -26,6 +26,7 @@ private:
     bool _isVisible;
 public:
     Bullet(Vector2f pos, Vector2f v);
+    ~Bullet();
     
     void onCollision(IGameObject *other);
     void init();

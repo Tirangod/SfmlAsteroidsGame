@@ -2,6 +2,8 @@
 #define UTILS_HPP
 
 #include <cmath>
+#include <cstdlib>
+
 #include <SFML/System.hpp>
 
 using namespace sf;
@@ -37,6 +39,12 @@ public:
     static long hashOf(T value) {
         return std::hash<std::string>{}(value);
     }
+
+    static float rand();
+
+    static int randSign();
+
+    //static float randRange(float min, float max);
     
 };
 

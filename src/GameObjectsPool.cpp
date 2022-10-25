@@ -72,8 +72,8 @@ void GameObjectsPool::optimize() {
         actualVector.erase(it);
         num++;
     }
-
     */
+    
     Logger::log("(GameObjectsPool::optimize) List optimized: " + std::to_string(num));
 }
 
