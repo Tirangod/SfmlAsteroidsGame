@@ -4,6 +4,9 @@ GameObjectsPool::GameObjectsPool() {
     needToOptimize = false;
     needToFlush = false;
     canPushDirect = true;
+
+    // Memory optimization
+    actualVector.reserve(RESERVED_OBJECT_NUMBER);
 }
 
 void GameObjectsPool::block() { 

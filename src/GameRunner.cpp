@@ -76,6 +76,10 @@ void GameRunner::checkCollisions() {
         for (int j = i + 1; j < objects.getSize(); j++) {
             obj2 = objects[j];
 
+            // Same type collision skip optimization
+            if (obj1->getTypeHash() == obj2->getTypeHash())
+                continue;
+
             // Distance optimization
             // If distance between objects higher than size of obj
             // that skip iteration and go to next obj

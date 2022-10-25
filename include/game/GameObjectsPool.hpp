@@ -9,6 +9,7 @@
 
 class GameObjectsPool {
 private:
+    static const int RESERVED_OBJECT_NUMBER = 100;
     bool needToOptimize;
     bool needToFlush;
     bool canPushDirect;
